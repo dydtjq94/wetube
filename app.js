@@ -15,6 +15,9 @@ const app = express();
 //pug 설정 (view engine) 수정
 app.set(`view engine`, "pug");
 
+//upload하고 directory 에서 file을 보내주는 middleware
+app.use("/uploads", express.static("uploads"));
+
 //middleware
 app.use(helmet());
 app.use(cookieParser());
