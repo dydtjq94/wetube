@@ -3,8 +3,10 @@ include mixin/videoBlock
 
 block content
     .search__header
-        h3 Searching by #{searchingBy}
+        h3 #{searchingBy} 검색 결과
     .search__videos
+        if videos.length === 0 
+            h5 찾고 있는 비디오가 없어요 :(
         each item in videos
             +videoBlock({
                     id:item.id,

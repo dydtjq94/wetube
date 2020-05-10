@@ -1,6 +1,6 @@
 import mongoose, { mongo } from "mongoose";
 
-//document name, schema(형태) 모델은 실제 data
+// document name, schema(형태) 모델은 실제 data
 const VideoSchema = new mongoose.Schema({
   fileUrl: {
     type: String,

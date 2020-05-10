@@ -26,7 +26,7 @@ export const postLoginCon = (req, res) => {
 };
 
 export const logoutCon = (req, res) => {
-  //To Do: Process Log Out
+  // To Do: Process Log Out
   res.redirect(routes.home);
 };
 
