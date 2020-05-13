@@ -18,6 +18,8 @@ app.set(`view engine`, "pug");
 // upload하고 directory 에서 file을 보내주는 middleware
 app.use("/uploads", express.static("uploads"));
 
+app.use("/static", express.static("static"));
+
 // middleware
 app.use(helmet());
 app.use(cookieParser());
