@@ -50,6 +50,7 @@ export const postUploadCon = async (req, res) => {
   });
   // To Do: Upload and save video
   console.log(newVideo);
+  console.log(path);
   res.redirect(routes.videos + routes.videoDetail(newVideo.id));
 };
 
