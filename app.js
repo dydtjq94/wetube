@@ -8,10 +8,12 @@ import passport from "passport";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import { localsMiddleWare } from "./middlewares";
+import routes from "./routes";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
-import routes from "./routes";
+import apiRouter from "./routers/apiRouter";
+
 import "./passport";
 
 // app으로 express 사용하도록 받아옴
@@ -61,5 +63,7 @@ app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
 // /videos 로 시작하는 모든 router
 app.use(routes.videos, videoRouter);
+// api router
+app.use(routes.api, apiRouter);
 
 export default app;

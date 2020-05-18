@@ -1,6 +1,7 @@
 import passport from "passport";
 import routes from "../routes";
 import User from "../models/User";
+import { videoDetailCon } from "./videoControllers";
 
 export const getJoinCon = (req, res) => {
   res.render("join", { pageTitle: "Join" });
@@ -115,16 +116,17 @@ export const postEditProfileCon = async (req, res) => {
     body: { name, email },
     file,
   } = req;
+  console.log(req.user.avatarUrl);
   try {
     await User.findByIdAndUpdate(req.user.id, {
       name,
       email,
       avatarUrl: file ? file.path : req.user.avatarUrl,
     });
-    res.redirect(routes.users + routes.me);
+    res.redirect(routes.me);
   } catch (error) {
     console.log(error);
-    res.render("editProfile", { pageTitle: "Edit Profile" });
+    res.redirect(routes.editProfile);
   }
 };
 
@@ -133,13 +135,35 @@ export const userDetailCon = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const users = await User.findById(id);
-    res.render("userdetail", { pageTitle: "User Detail" });
+    const user = await User.findById(id).populate("videos");
+    console.log(user);
+    res.render("userdetail", {
+      pageTitle: "User Detail",
+      user,
+    });
   } catch (error) {
     console.log(error);
     res.redirect(routes.home);
   }
 };
 
-export const changePasswordCon = (req, res) =>
+export const getChangePasswordCon = (req, res) =>
   res.render("changepassword", { pageTitle: "Change Password" });
+
+export const postChangePasswordCon = async (req, res) => {
+  const {
+    body: { oldPassword, newPassword, newPassword1 },
+  } = req;
+  try {
+    if (newPassword !== newPassword1) {
+      res.status(400);
+      res.redirect(routes.users + routes.changePassword);
+      return;
+    }
+    await req.user.changePassword(oldPassword, newPassword);
+    res.redirect(routes.me);
+  } catch (error) {
+    res.status(400);
+    res.redirect(routes.users + routes.changePassword);
+  }
+};
