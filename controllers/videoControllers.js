@@ -4,7 +4,7 @@ import Comment from "../models/Comment";
 
 export const homeCon = async (req, res) => {
   try {
-    const videos = await Video.find({}).sort({ _id: -1 });
+    const videos = await Video.find({}).populate("creator").sort({ _id: -1 });
     // console.log(videos);
     res.render("home", { pageTitle: "Home", videos });
   } catch (error) {
@@ -66,6 +66,7 @@ export const videoDetailCon = async (req, res) => {
     const video = await Video.findById(id)
       .populate(`creator`)
       .populate(`comments`);
+
     res.render("videodetail", { pageTitle: video.title, video });
   } catch (error) {
     console.log(error);
@@ -143,7 +144,7 @@ export const postRegisterViewCon = async (req, res) => {
 export const postAddCommentCon = async (req, res) => {
   const {
     params: { id },
-    body: { comment },
+    body: { commentttt: comment },
     user,
   } = req;
   try {
@@ -153,10 +154,30 @@ export const postAddCommentCon = async (req, res) => {
       creator: user.id,
     });
     video.comments.push(newComment.id);
+    user.comments.push(newComment.id);
+
+    // console.log(newComment);
     video.save();
+    user.save();
+    console.log(user);
   } catch (error) {
     res.status(400);
   } finally {
     res.end();
   }
+};
+
+export const postRemoveCommentCon = async (req, res) => {
+  const {
+    params: { id: commentId },
+    body: { videoId },
+    user,
+  } = req;
+  console.log(commentId);
+  // delete Comment db
+  await Comment.findByIdAndDelete(commentId);
+  // delete Video db
+  // await Video.updateOne({ _id: videoId }, { $pull: { comments: commentId } });
+  // delete User db
+  // await User.updateOne({ _id: userId }, { $pull: { comments: commentId } });
 };

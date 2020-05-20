@@ -14,7 +14,7 @@ export const localsMiddleWare = (req, res, next) => {
   next();
 };
 
-// controller에 접근을 못하게 하는 middleware
+// 로그인 한 유저는 접속하지 못하게하는 미들웨어
 export const onlyPublic = (req, res, next) => {
   if (req.user) {
     res.redirect(routes.home);
@@ -23,6 +23,7 @@ export const onlyPublic = (req, res, next) => {
   }
 };
 
+// 로그인 한 유저만 접속가능하게 하는 미들웨어
 export const onlyPrivate = (req, res, next) => {
   if (req.user) {
     next();

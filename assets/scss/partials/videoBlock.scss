@@ -1,11 +1,28 @@
 .videoBlock {
+  width: 100%;
   video {
-    margin-bottom: 10px;
+    margin-bottom: 3px;
+    height: 90%;
+    object-fit: contain;
+    width: 100%;
     max-width: 100%;
+    background-color: black;
   }
   .videoBlock__title {
     font-size: 18px;
-    font-weight: 300;
-    margin-bottom: 10px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  .videoBlockDown {
+    font-size: 13px;
+    opacity: 0.8;
+    display: flex;
+    & > * {
+      margin-right: 3px;
+    }
+    .videoBlock__creator {
+      color: rgb(36, 129, 235);
+      font-weight: 700;
+    }
   }
 }

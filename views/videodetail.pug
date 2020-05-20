@@ -20,17 +20,15 @@ block content
                 span Uploaded by 
                 a(href=routes.users + routes.userDetail(video.creator.id)) "#{video.creator.name}"
         .video__comments
-            if video.comments.length === 1
-                span.video__comment-number
-                    span#jsCommentNumber 1
-                    |  comment
-            else
-                span.video__comment-number
-                    span#jsCommentNumber=video.comments.length
-                    |  comments
+            span.video__comment-number
+                span#jsCommentNumber=video.comments.length
+                |  개의 댓글
             form.add__comment#jsAddComment
                 input(type="text", placeholder="Add a comment")
             ul.video__comments-list#jsCommentList
                 each comment in video.comments.reverse()
-                    li 
-                        span #{comment.text}
+                    li(id=comment.id)
+                        span #{comment.text} 
+                        if `${comment.creator}` === `${loggedUser.id}`
+                            button.comment-remove#jsCommentRemove ❌
+                        

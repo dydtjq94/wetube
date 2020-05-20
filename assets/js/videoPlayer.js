@@ -124,11 +124,9 @@ function init() {
   playBtn.addEventListener("click", handlePlayClick);
   volumBtn.addEventListener("click", handleVoumeClick);
   fullScreenBtn.addEventListener("click", goFullScreen);
-  window.onload = function () {
-    setTotalTime();
-  };
   videoPlayer.addEventListener("ended", handleEnded);
   videoPlayer.volume = 0.5;
+  // await setTotalTime();
   volumeRange.addEventListener("input", handleDragVolume);
   if (videoPlayer.volume > 0.7) {
     volumBtn.innerHTML = `<i class="fas fa-volume-up"></i>`;
@@ -137,6 +135,7 @@ function init() {
   } else {
     volumBtn.innerHTML = `<i class="fas fa-volume-off"></i>`;
   }
+  setInterval(setTotalTime, 500);
 }
 
 if (videoContainer) {

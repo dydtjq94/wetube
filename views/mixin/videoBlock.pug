@@ -3,7 +3,9 @@ mixin videoBlock(item = {})
         a(href=routes.videos+routes.videoDetail(item.id))    
             video.videoBlock__thumbnail(src=`/${item.videoFile}`, controls=false)
             h4.videoBlock__title #{item.title}
-            if item.views === 1
-                h6.videoBlock__views 1 view
-            else
-                h6.videoBlock__views #{item.views} views 
+            .videoBlockDown
+                h6.videoBlock__creator #{item.creator.name} ・
+                h6.videoBlock__views  조회수 #{item.views}회 ・ 
+                span.videoBlock__date #{item.createdAt.getFullYear()}.#{item.createdAt.getMonth()}.#{item.createdAt.getDate()}
+
+                

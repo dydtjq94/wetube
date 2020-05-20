@@ -102,8 +102,13 @@ export const logoutCon = (req, res) => {
   res.redirect(routes.home);
 };
 
-export const meCon = (req, res) => {
-  res.render("userdetail", { pageTitle: "My Profil", user: req.user });
+// 5ebd1d4744e71a78451e9c33
+export const meCon = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  const user = await User.findOne(req.user).populate("videos");
+  res.render("userdetail", { pageTitle: "My Profil", user });
 };
 
 export const usersCon = (req, res) => res.render("user", { pageTitle: "User" });
