@@ -13,7 +13,7 @@ const handleVideoData = (event) => {
   link.download = "recorded.webm";
   link.innerHTML = "너의 녹화영상";
   document.body.appendChild(link);
-  //fake link를 통해 링크를 누른 것처럼 만들자!
+  // fake link를 통해 링크를 누른 것처럼 만들자!
   link.click();
 };
 
