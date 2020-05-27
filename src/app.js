@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
@@ -6,6 +7,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import passport from "passport";
 import session from "express-session";
+import path from "path";
 import MongoStore from "connect-mongo";
 import { localsMiddleWare } from "./middlewares";
 import routes from "./routes";
@@ -22,18 +24,19 @@ const app = express();
 // session 저장
 const CookieStore = MongoStore(session);
 
+app.use(helmet());
+
 // pug 설정 (view engine) 수정
 app.set(`view engine`, "pug");
+app.set("views", path.join(__dirname, "views"));
 
 // upload하고 directory 에서 file을 보내주는 middleware
-app.use("/uploads", express.static("uploads"));
-app.use("/static", express.static("static"));
+app.use("/static", express.static(path.join(__dirname, "static")));
 
 // console.log(process.env.PORT);
 // console.log(process.env.COOKIE_SECRET);
 
 // middleware
-app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

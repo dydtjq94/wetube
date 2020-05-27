@@ -1,3 +1,5 @@
+import "@babel/polyfill";
+
 // 모델을 추가해줘야함
 import "./models/Video";
 import "./models/Comment";
