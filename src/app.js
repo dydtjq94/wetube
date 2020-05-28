@@ -1,4 +1,3 @@
-import "@babel/polyfill";
 import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
@@ -8,6 +7,7 @@ import mongoose from "mongoose";
 import passport from "passport";
 import session from "express-session";
 import path from "path";
+import flash from "express-flash";
 import MongoStore from "connect-mongo";
 import { localsMiddleWare } from "./middlewares";
 import routes from "./routes";
@@ -53,6 +53,9 @@ app.use(
     }),
   })
 );
+
+// express flash 설정
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
