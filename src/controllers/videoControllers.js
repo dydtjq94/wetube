@@ -79,26 +79,13 @@ export const getEditVideoCon = async (req, res) => {
   const {
     params: { id },
   } = req;
-  console.log(req.params.id);
-  const video = await Video.findById(req.params.id);
-  console.log(video);
-  res.render("editvideo", { pageTitle: `Edit ${video.title}`, video });
-
-  // try {
-  //   const video = await Video.findById(req.params.id);
-  //   console.log(video);
-  //   if (video.creator !== req.user.id) {
-  //     console.log(`....`);
-
-  //     throw Error();
-  //   } else {
-  //     res.render("editvideo", { pageTitle: `Edit ${video.title}`, video });
-  //     console.log(`....`);
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  //   res.redirect(routes.home);
-  // }
+  try {
+    const video = await Video.findById(req.params.id);
+    res.render("editvideo", { pageTitle: `Edit ${video.title}`, video });
+  } catch (error) {
+    console.log(error);
+    res.redirect(routes.home);
+  }
 };
 
 export const postEditVideoCon = async (req, res) => {
@@ -119,13 +106,10 @@ export const deleteVideoCon = async (req, res) => {
   const {
     params: { id },
   } = req;
+
   try {
     const video = await Video.findById(id);
-    if (video.creator !== req.user.id) {
-      throw Error();
-    } else {
-      await Video.findOneAndRemove({ _id: id });
-    }
+    await Video.findOneAndRemove({ _id: id });
   } catch (error) {
     console.log(error);
   }
