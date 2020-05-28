@@ -12,6 +12,7 @@ export const postJoinCon = async (req, res, next) => {
     body: { name, email, password, password2 },
   } = req;
   if (password !== password2) {
+    req.flash("error", `Passwords don't match`);
     res.status(400);
     res.render("join", { pageTitle: "Join" });
   } else {
@@ -38,10 +39,15 @@ export const getLoginCon = (req, res) =>
 export const postLoginCon = passport.authenticate("local", {
   failureRedirect: routes.login,
   successRedirect: routes.home,
+  successFlash: "Welcome",
+  failureFlash: "Can't log in. Check email and/or password",
 });
 
 // github 으로 보내는 것
-export const githubLoginCon = passport.authenticate("github");
+export const githubLoginCon = passport.authenticate("github", {
+  successFlash: "Welcome",
+  failureFlash: "Can't log in. Check email and/or password",
+});
 
 // github login function (cb는 passport로부터 우리에게 제공되는 것) 돌아오게 하는것
 export const githubLoginCallbackCon = async (
@@ -98,6 +104,7 @@ export const postFacebookLogIn = (req, res) => {
 
 export const logoutCon = (req, res) => {
   // To Do: Process Log Out
+  req.flash("success", "Bye Bye!");
   req.logout();
   res.redirect(routes.home);
 };
